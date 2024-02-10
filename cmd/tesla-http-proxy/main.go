@@ -45,7 +45,7 @@ func main() {
 		port         int
 	)
 
-	config, err := cli.NewConfig(cli.FlagPrivateKey)
+	config, err := cli.NewConfigWithPassword(cli.FlagPrivateKey, "")
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to load credential configuration: %s\n", err)

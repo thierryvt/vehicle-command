@@ -172,6 +172,23 @@ func NewConfig(flags Flag) (*Config, error) {
 	return &c, nil
 }
 
+func NewConfigWithPassword(flags Flag, password string) (*Config, error) {
+	c := Config{
+		Flags: flags,
+		Backend: keyring.Config{
+			ServiceName:              keyringServiceName,
+			KeychainTrustApplication: true,
+			KeyCtlScope:              "user",
+		},
+		password: &password,
+	}
+	c.BackendType = backendType{&c}
+	c.Backend.KeychainPasswordFunc = c.getPassword
+	c.Backend.FilePasswordFunc = c.getPassword
+
+	return &c, nil
+}
+
 func (c *Config) RegisterCommandLineFlags() {
 	if c.Flags.isSet(FlagVIN) {
 		flag.StringVar(&c.VIN, "vin", "", "Vehicle Identification Number. Defaults to $TESLA_VIN.")

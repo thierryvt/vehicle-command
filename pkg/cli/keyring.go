@@ -48,7 +48,7 @@ func (b backendType) Set(v string) error {
 }
 
 func (c *Config) getPassword(prompt string) (string, error) {
-	if c.password != nil && *c.password != "" {
+	if c.password != nil {
 		return *c.password, nil
 	}
 
